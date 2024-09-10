@@ -97,7 +97,7 @@ services:
       retries: 1
 
   gateway-service:
-    image: cr.yandex/crpoaqoigck9sge4bf4s/gateway_service
+    image: cr.yandex/crpl4r9r7vin4r016c40/gateway_service
     build: 
       context: .
       dockerfile: ./services/gateway_service/Dockerfile
@@ -107,7 +107,7 @@ services:
       - default
   
   loyalty-service:
-    image: cr.yandex/crpoaqoigck9sge4bf4s/loyalty_service
+    image: cr.yandex/crpl4r9r7vin4r016c40/loyalty_service
     build:
       context: .
       dockerfile: ./services/loyalty_service/Dockerfile
@@ -120,7 +120,7 @@ services:
       - default
   
   payment-service:
-    image: cr.yandex/crpoaqoigck9sge4bf4s/payment_service
+    image: cr.yandex/crpl4r9r7vin4r016c40/payment_service
     build:
       context: .
       dockerfile: ./services/payment_service/Dockerfile
@@ -133,7 +133,7 @@ services:
       - default
   
   reservation-service:
-    image: cr.yandex/crpoaqoigck9sge4bf4s/reservation_service
+    image: cr.yandex/crpl4r9r7vin4r016c40/reservation_service
     build:
       context: .
       dockerfile: ./services/reservation_service/Dockerfile
@@ -148,7 +148,7 @@ services:
       DB_CONFIG: "host=reservations user=program password=test dbname=reservations port=5432"
   
   identity-provider:
-    image: cr.yandex/crpoaqoigck9sge4bf4s/identity_provider
+    image: cr.yandex/crpl4r9r7vin4r016c40/identity_provider
     build:
       context: .
       dockerfile: ./services/identity_provider/Dockerfile
@@ -163,7 +163,7 @@ services:
       DB_CONFIG: "host=users user=program password=test dbname=users port=5432"
   
   statistic-service:
-    image: cr.yandex/crpoaqoigck9sge4bf4s/statistic_service
+    image: cr.yandex/crpl4r9r7vin4r016c40/statistic_service
     build:
       context: .
       dockerfile: ./services/statistic_service/Dockerfile
