@@ -1,0 +1,27 @@
+general_configs:
+  max_num_of_fails: 2
+  timeout: 10
+
+postgres_db:
+  user: program
+  password: test
+  db_name: users
+  host: users
+  port: 5432
+
+identity_app:
+  host: "0.0.0.0"
+  external_ip: "95.163.210.40"
+  prefix: "/api/v1"
+  port: 8090
+  log_level: "info"
+  reload: True
+
+  keys_period_update: 365 # days
+  num_of_keys: 2
+  key_exp: "AQAB"
+  host_name: "http://identity-provider:8090/"
+  access_token_exp_period_minutes: 5 #60 # minutes
+  refresh_token_exp_period_days: 1 #30 # days
+
+
