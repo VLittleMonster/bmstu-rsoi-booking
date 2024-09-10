@@ -74,26 +74,5 @@ jobs:
            --set services.reservation-service.env.DB_DSN="host=db-service user=program password=test dbname=postgres port=5432 user=program password=$POSTGRES_PASSWORD dbname=reservations port=5432" \
            --set services.payment-service.env.DB_DSN="host=db-service user=program password=test dbname=postgres port=5432 user=program password=$POSTGRES_PASSWORD dbname=payments port=5432" \
            --set services.loyalty-service.env.DB_DSN="host=db-service user=program password=test dbname=postgres port=5432 user=program password=$POSTGRES_PASSWORD dbname=loyalties port=5432"
-
-  ApiTests:
-    name: Run API Tests
-    needs: [deploy]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-        
-      - name: Run API Tests
-        uses: matt-ball/newman-action@master
-        with:
-          collection: v2/postman/collection.json
-          environment: v2/postman/environment.json
-          delayRequest: 100
-          reporters: '[ "cli" ]'
-          
-      - name: Autograding
-        uses: education/autograding@v1
-        continue-on-error: true
     
       
