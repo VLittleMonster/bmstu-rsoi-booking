@@ -47,7 +47,7 @@ jobs:
         run: echo "$CRYANDEX_PASSWORD" | docker login -u oauth --password-stdin cr.yandex
 
       - name: Docker Publish
-        run: docker-compose push
+        run: docker compose push
 
       - name: Install Helm
         uses: azure/setup-helm@v3
