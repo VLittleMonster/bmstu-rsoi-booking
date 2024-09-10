@@ -7,7 +7,7 @@ replicaCount: 1
 services:
   loyalty-service:
     name: loyalty-service
-    container: cr.yandex/crpoaqoigck9sge4bf4s/loyalty_service
+    container: cr.yandex/crpl4r9r7vin4r016c40/loyalty_service
     replicaCount: 1
     env:
       DB_DSN: "host=db-service user=program password=test dbname=loyalties port=5432" # add on deploy like ""
@@ -16,7 +16,7 @@ services:
     targetPort: 8050
   payment-service:
     name: payment-service
-    container: cr.yandex/crpoaqoigck9sge4bf4s/payment_service
+    container: cr.yandex/crpl4r9r7vin4r016c40/payment_service
     replicaCount: 1
     env:
       DB_DSN: "host=db-service user=program password=test dbname=payments port=5432" # add on deploy
@@ -25,7 +25,7 @@ services:
     targetPort: 8060
   reservation-service:
     name: reservation-service
-    container: cr.yandex/crpoaqoigck9sge4bf4s/reservation_service
+    container: cr.yandex/crpl4r9r7vin4r016c40/reservation_service
     replicaCount: 1
     env:
       DB_DSN: "host=db-service user=program password=test dbname=reservations port=5432" # add on deploy
@@ -34,7 +34,7 @@ services:
     targetPort: 8070
   identity-provider:
     name: identity-provider
-    container: cr.yandex/crpoaqoigck9sge4bf4s/identity_provider
+    container: cr.yandex/crpl4r9r7vin4r016c40/identity_provider
     replicaCount: 1
     env:
       DB_DSN: "host=db-service user=program password=test dbname=users port=5432" # add on deploy
@@ -43,7 +43,7 @@ services:
     targetPort: 8090
   statistic-service:
     name: statistic-service
-    container: cr.yandex/crpoaqoigck9sge4bf4s/statistic_service
+    container: cr.yandex/crpl4r9r7vin4r016c40/statistic_service
     replicaCount: 1
     env:
       DB_DSN: "host=db-service user=program password=test dbname=statistics port=5432" # add on deploy
@@ -52,7 +52,7 @@ services:
     targetPort: 8040
   gateway-service:
     name: gateway-service
-    container: cr.yandex/crpoaqoigck9sge4bf4s/gateway_service
+    container: cr.yandex/crpl4r9r7vin4r016c40/gateway_service
     replicaCount: 1
     env:
       RESERVATION_SERVICE_URL: "http://reservation-service/api/v1/"
@@ -65,7 +65,7 @@ services:
     targetPort: 8080
   frontend:
     name: frontend
-    container: cr.yandex/crpoaqoigck9sge4bf4s/frontend
+    container: cr.yandex/crpl4r9r7vin4r016c40/frontend
     replicaCount: 1
     env:
     publishUrl: /booking-service/

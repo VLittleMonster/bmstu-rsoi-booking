@@ -19,35 +19,35 @@ replicaCount: 1
 services:
   loyalties:
     name: loyalties
-    container: cr.yandex/crpoaqoigck9sge4bf4s/loyalties
+    container: cr.yandex/crpl4r9r7vin4r016c40/loyalties
     replicaCount: 1
     #env:
       # DB_DSN: "" # add on deploy like ""
     hostPort: 5432
   payments:
     name: payments
-    container: cr.yandex/crpoaqoigck9sge4bf4s/payments
+    container: cr.yandex/crpl4r9r7vin4r016c40/payments
     replicaCount: 1
     #env:
       # DB_DSN: "" # add on deploy like ""
     hostPort: 5433
   reservations:
     name: reservations
-    container: cr.yandex/crpoaqoigck9sge4bf4s/reservations
+    container: cr.yandex/crpl4r9r7vin4r016c40/reservations
     replicaCount: 1
     #env:
       # DB_DSN: "" # add on deploy like ""
     hostPort: 5434
   users:
     name: users
-    container: cr.yandex/crpoaqoigck9sge4bf4s/users
+    container: cr.yandex/crpl4r9r7vin4r016c40/users
     replicaCount: 1
     #env:
       # DB_DSN: "" # add on deploy like ""
     hostPort: 5435
   statistics:
     name: statistics
-    container: cr.yandex/crpoaqoigck9sge4bf4s/statistics
+    container: cr.yandex/crpl4r9r7vin4r016c40/statistics
     replicaCount: 1
     #env:
       # DB_DSN: "" # add on deploy like ""
