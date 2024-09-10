@@ -1,0 +1,9 @@
+{{- range  $key, $val := .Values.services}}
+
+{{- template "service.template" (dict "ctx" $ "service" $val)}}
+---
+{{- template "deployment.template" (dict "ctx" $ "service" $val "services" $.Values.services)}}
+---
+{{- template "configmap.template" (dict "ctx" $ "service" $val) }}
+---
+{{- end }}

@@ -1,0 +1,220 @@
+version: "3"
+services:
+  loyalties:
+    image: library/postgres:16-alpine
+    environment:
+      - POSTGRES_USER=program
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=loyalties
+    networks:
+      - default
+    volumes:
+      - db-loyalties:/var/lib/postgresql/data
+      - ./services/loyalty_service/sql/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U program"]
+      interval: 2s
+      timeout: 2s
+      retries: 1
+    
+  payments:
+    image: library/postgres:16-alpine
+    environment:
+      - POSTGRES_USER=program
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=payments
+    networks:
+      - default
+    volumes:
+      - db-payments:/var/lib/postgresql/data
+      #- ./postgres/:/docker-entrypoint-initdb.d/
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U program"]
+      interval: 2s
+      timeout: 2s
+      retries: 1
+
+
+  reservations:
+    image: library/postgres:16-alpine
+    environment:
+      - POSTGRES_USER=program
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=reservations
+    networks:
+      - default
+    volumes:
+      - db-reservations:/var/lib/postgresql/data
+      - ./services/reservation_service/sql/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    ports:
+      - "5434:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U program"]
+      interval: 2s
+      timeout: 2s
+      retries: 1
+  
+  users:
+    image: library/postgres:16-alpine
+    environment:
+      - POSTGRES_USER=program
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=users
+    networks:
+      - default
+    volumes:
+      - db-users:/var/lib/postgresql/data
+      - ./services/identity_provider/sql/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    ports:
+      - "5435:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U program"]
+      interval: 2s
+      timeout: 2s
+      retries: 1
+  
+  statistics:
+    image: library/postgres:16-alpine
+    environment:
+      - POSTGRES_USER=program
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=statistics
+    networks:
+      - default
+    volumes:
+      - db-statistics:/var/lib/postgresql/data
+      - ./services/statistic_service/sql/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    ports:
+      - "5437:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U program"]
+      interval: 2s
+      timeout: 2s
+      retries: 1
+
+  gateway-service:
+    image: cr.yandex/crpoaqoigck9sge4bf4s/gateway_service
+    build: 
+      context: .
+      dockerfile: ./services/gateway_service/Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - default
+  
+  loyalty-service:
+    image: cr.yandex/crpoaqoigck9sge4bf4s/loyalty_service
+    build:
+      context: .
+      dockerfile: ./services/loyalty_service/Dockerfile
+    depends_on:
+      loyalties:
+        condition: service_healthy
+    ports:
+      - "8050:8050"
+    networks:
+      - default
+  
+  payment-service:
+    image: cr.yandex/crpoaqoigck9sge4bf4s/payment_service
+    build:
+      context: .
+      dockerfile: ./services/payment_service/Dockerfile
+    depends_on:
+      payments:
+        condition: service_healthy
+    ports:
+      - "8060:8060"
+    networks:
+      - default
+  
+  reservation-service:
+    image: cr.yandex/crpoaqoigck9sge4bf4s/reservation_service
+    build:
+      context: .
+      dockerfile: ./services/reservation_service/Dockerfile
+    depends_on:
+      reservations:
+        condition: service_healthy
+    ports:
+      - "8070:8070"
+    networks:
+      - default
+    environment:
+      DB_CONFIG: "host=reservations user=program password=test dbname=reservations port=5432"
+  
+  identity-provider:
+    image: cr.yandex/crpoaqoigck9sge4bf4s/identity_provider
+    build:
+      context: .
+      dockerfile: ./services/identity_provider/Dockerfile
+    depends_on:
+      users:
+        condition: service_healthy
+    ports:
+      - "8090:8090"
+    networks:
+      - default
+    environment:
+      DB_CONFIG: "host=users user=program password=test dbname=users port=5432"
+  
+  statistic-service:
+    image: cr.yandex/crpoaqoigck9sge4bf4s/statistic_service
+    build:
+      context: .
+      dockerfile: ./services/statistic_service/Dockerfile
+    depends_on:
+      statistics:
+        condition: service_healthy
+    ports:
+      - "8040:8040"
+    networks:
+      - default
+  
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "22181:2181"
+    restart: unless-stopped
+    networks:
+      - default
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+     - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:29092,OUTSIDE://localhost:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_LOG_RETENTION_HOURS: 1
+      KAFKA_LOG_RETENTION_BYTES: 4073741824
+      KAFKA_LOG_SEGMENT_BYTES: 1073741824
+      KAFKA_RETENTION_CHECK_INTERVAL_MS: 300000
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+    networks:
+      - default
+
+volumes:
+  db-loyalties:
+  db-reservations:
+  db-payments:
+  db-users:
+  db-statistics:
+  
+networks:
+  default:
