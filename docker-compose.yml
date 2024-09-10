@@ -174,6 +174,16 @@ services:
       - "8040:8040"
     networks:
       - default
+
+  frontend:
+    image: cr.yandex/crpl4r9r7vin4r016c40/frontend
+    build:
+      context: .
+      dockerfile: ./services/frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - default
   
   zookeeper:
     image: wurstmeister/zookeeper
