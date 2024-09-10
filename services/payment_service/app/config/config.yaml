@@ -1,0 +1,19 @@
+general_configs:
+  max_num_of_fails: 2
+  timeout: 10
+
+postgres_db:
+  user: program
+  password: test
+  db_name: payments             # postgres
+  host: payments
+  port: 5432
+
+payment_app:
+  host: "0.0.0.0"
+  external_ip: "95.163.210.40"
+  prefix: "/api/v1/payments"
+  port: 8060
+  log_level: "info"
+  reload: True
+
