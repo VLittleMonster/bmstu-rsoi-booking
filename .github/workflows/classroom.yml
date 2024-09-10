@@ -38,8 +38,8 @@ jobs:
       - uses: docker/setup-buildx-action@v2
       
       - name: Docker build
+        run: docker-compose build
         #timeout-minutes: 5
-        run:  docker-compose build
 
       - name: Docker Hub login
         env:
