@@ -51,6 +51,7 @@ async def auth_user(request: AuthenticationRequest, db: Session) -> TokenRespons
     TokenMaster.schedule_gen_keys(db)
     if request.grant_type == GrantTypes.PASSWORD:
         user = db.query(User).filter(User._username == request.username).first()
+        print(f"received username: {request.username}")
         print("user: ", user)
         if user is None or not user.verify_password(request.password):
             raise HTTPException(401, detail="Unauthorized")
