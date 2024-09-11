@@ -10,7 +10,7 @@ import { Payload } from "types/Payload";
 import {jwtDecode} from "jwt-decode";
 import { StatisticEventInfo } from "types/StatisticEventInfo";
 
-export const backUrl = "http://localhost:8080/api/v1";
+export const backUrl = "http://84.201.148.115/booking-service/api/v1";
 
 const axiosBackend = () => {
     let instance = axios.create({
