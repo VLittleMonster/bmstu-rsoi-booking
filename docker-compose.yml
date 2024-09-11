@@ -170,11 +170,13 @@ services:
     depends_on:
       statistics:
         condition: service_healthy
+      kafka:
+        condition: service_healthy
     ports:
       - "8040:8040"
     networks:
       - default
-
+  
   frontend:
     image: cr.yandex/crpl4r9r7vin4r016c40/frontend
     build:
