@@ -52,3 +52,17 @@ services:
     #env:
       # DB_DSN: "" # add on deploy like ""
     hostPort: 5437
+  zookeeper:
+    name: zookeeper
+    container: cr.yandex/crpl4r9r7vin4r016c40/zookeeper
+    replicaCount: 1
+    #env:
+      # DB_DSN: "" # add on deploy like ""
+    hostPort: 22181
+  kafka:
+    name: kafka
+    container: cr.yandex/crpl4r9r7vin4r016c40/kafka
+    replicaCount: 1
+    #env:
+      # DB_DSN: "" # add on deploy like ""
+    hostPort: 9092
