@@ -7,7 +7,7 @@ import json
 
 KAFKA_TOPIC = "booking.statistic.events.topic"
 KAFKA_CONSUMER_GROUP = "group-id"
-KAFKA_BOOTSTRAP_SERVERS = "kafka:29092"     # 'kafka_utils:9092'
+KAFKA_BOOTSTRAP_SERVERS = "kafka:9092"    # "kafka:29092"     # 'kafka_utils:9092'
 
 
 async def consume(app_db: Database):
