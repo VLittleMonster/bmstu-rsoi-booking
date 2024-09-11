@@ -76,7 +76,6 @@ services:
     container: cr.yandex/crpl4r9r7vin4r016c40/zookeeper
     replicaCount: 1
     env:
-    publishUrl:
     #env:
       # DB_DSN: "" # add on deploy like ""
     port: 22181
@@ -85,7 +84,6 @@ services:
     name: kafka
     container: cr.yandex/crpl4r9r7vin4r016c40/kafka
     replicaCount: 1
-    publishUrl:
     #env:
       # DB_DSN: "" # add on deploy like ""
     port: 9092
