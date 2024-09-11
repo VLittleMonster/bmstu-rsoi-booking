@@ -60,7 +60,7 @@ services:
       LOYALTY_SERVICE_URL: "http://loyalty-service/api/v1/"
       IDENTITY_PROVIDER_URL: "http://identity-provider/api/v1/"
       STATISTIC_SERVICE_URL: "http://statistic-service/api/v1/"
-    publishUrl: /api/v1/
+    publishUrl: /booking-service/
     port: 80
     targetPort: 8080
   frontend:
