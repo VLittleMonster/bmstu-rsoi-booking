@@ -66,7 +66,7 @@ class User(Base):
             role=self.__role,
             first_name=self.__first_name,
             last_name=self.__last_name,
-            patronymic=self.__patronymic,
+            patronymic=self.__patronymic if len(self.__patronymic) > 0 else '',
             phone_number=self.__phone_number,
             email=self.__email
         )
