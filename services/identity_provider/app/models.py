@@ -28,7 +28,7 @@ class User(Base):
     __role = Column(VARCHAR(80), nullable=False, default=ROLES[0], name='role')
     __first_name = Column(VARCHAR(80), nullable=False, name='first_name')
     __last_name = Column(VARCHAR(80), nullable=False, name='last_name')
-    __patronymic = Column(VARCHAR(80), name='patronymic')
+    __patronymic = Column(VARCHAR(80), name='patronymic', default='')
     __phone_number = Column(VARCHAR(15), nullable=False, name='phone_number')
     __email = Column(VARCHAR(30), nullable=False, name='email')
 
